@@ -17,7 +17,7 @@ class RoundedAim : Check("Rounded Aim", "Checks for rounded yaw behavior", Categ
         val player : Player = event.player
         val roundedYaw : Int = abs(player.location.yaw).toInt() % 360
         lastYaws[lastIndex] = roundedYaw
-        lastIndex = (lastIndex + 1) % 4
+        lastIndex = (lastIndex + 1) % 10
         for (i in -180..180 step 1) {
             if (lastYaws.all { it % i == 0 }) {
                 // The last 10 yaws are divisible by the current divisor, so flag
