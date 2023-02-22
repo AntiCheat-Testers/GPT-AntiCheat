@@ -5,7 +5,9 @@ import org.bukkit.event.player.PlayerMoveEvent
 import org.bukkit.util.Vector
 
 class FlightCheck : Check("Flight", "Checks for invalid motion while in air", Category.MOVE) {
-
+init {
+    threshold=10
+}
     private val slimeVelocityThreshold = 1.5 // adjust this value as needed
     private var lastOnGround: Long = 0
     private var lastSlimeVelocity: Vector? = null
