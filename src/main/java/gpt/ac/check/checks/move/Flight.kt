@@ -4,7 +4,7 @@ import gpt.ac.check.Check
 import org.bukkit.event.player.PlayerMoveEvent
 import org.bukkit.util.Vector
 
-class FlightCheck : Check("Flight", "Checks for invalid motion while in air", Category.MOVE) {
+class Flight : Check("Flight", "Checks for invalid motion while in air", Category.MOVE) {
 init {
     threshold=10
 }
