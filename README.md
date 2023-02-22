@@ -5,3 +5,9 @@ GPT-Anticheat is an advanced anticheat system powered by OpenAI's GPT (Generativ
 ## Why GPT-Anticheat is the best anticheat
 
 GPT-Anticheat is the best anticheat on the market because of its advanced machine learning algorithms. It is capable of detecting a wide range of cheats, including fly hacks, speed hacks, and aimbot. GPT-Anticheat also has a low false positive rate, meaning it rarely flags legitimate players as cheaters. In addition, it is highly configurable, allowing server owners to adjust the anticheat's sensitivity and customize its behavior to fit their specific needs. Finally, GPT-Anticheat is regularly updated with new features and improvements to stay ahead of the latest cheating techniques. Overall, GPT-Anticheat is the most effective and reliable anticheat system available for Minecraft servers.
+
+### Rules
+
+- All code in this repository must be written by ChatGPT. 
+- Please make sure your code is well-documented and follows the Kotlin coding conventions. 
+- All pull requests should be thoroughly tested before submission.
