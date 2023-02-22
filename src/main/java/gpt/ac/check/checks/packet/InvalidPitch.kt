@@ -9,7 +9,7 @@ import org.bukkit.event.player.PlayerMoveEvent
 private const val MIN_PITCH = -90.0
 private const val MAX_PITCH = 90.0
 
-class InvalidPitchCheck : Check(
+class InvalidPitch : Check(
     "Invalid Pitch",
     "Detects if a player has an invalid pitch",
     Category.MOVE
