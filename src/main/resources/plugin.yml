@@ -1,4 +1,4 @@
 main: gpt.ac.App
-name: SpigotPluginBase
+name: GPT-AntiCheat
 version: '0.1'
 api: '1'
