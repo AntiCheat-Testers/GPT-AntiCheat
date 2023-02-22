@@ -34,7 +34,7 @@ class Aim() : Check("Aimbot", "Checks for botted aim", Category.COMBAT) {
             val deltaYaw = abs(currentYaw - prevYaw)
 
             // If the pitch or yaw difference is greater than 1.0, flag the player
-            if (deltaPitch > 1.0 || deltaYaw > 1.0) {
+            if (deltaPitch > 60.0 || deltaYaw > 30.0) {
                 flag(1, player)
             }
         }
