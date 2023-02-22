@@ -29,13 +29,13 @@ repositories {
 
 dependencies {
   implementation(kotlin("stdlib"))
-  implementation("nz.ac.waikato.cms.weka:weka-stable:3.8.6")
   implementation("org.reflections:reflections:0.10.2")
 
   implementation("org.spigotmc:spigot-api:1.17-R0.1-SNAPSHOT")
-  implementation("com.openpojo:openpojo:0.9.1")
+
 }
 
 tasks.withType<KotlinCompile> {
   kotlinOptions.jvmTarget = "1.8"
 }
+
