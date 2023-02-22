@@ -1,0 +1,4 @@
+main: gpt.ac.App
+name: SpigotPluginBase
+version: '0.1'
+api: '1'
