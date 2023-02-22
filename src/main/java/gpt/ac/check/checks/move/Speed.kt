@@ -8,7 +8,7 @@ import org.bukkit.event.player.PlayerMoveEvent
 import org.bukkit.potion.PotionEffectType
 import kotlin.math.abs
 
-class StrafeCheck : Check("Strafe", "Checks for invalid strafing behavior", Category.MOVE) {
+class Speed : Check("Strafe", "Checks for invalid strafing behavior", Category.MOVE) {
     private var lastLocation: Location? = null
 
     override fun onMove(event: PlayerMoveEvent) {
