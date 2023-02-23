@@ -10,7 +10,7 @@ class Flight: Check("Flight", "Checks for invalid motion while in air", Category
     private var lastOnGround: Long = 0
     private var lastSlimeVelocity: Vector? = null
 
-    override fun BukkitonMove(event: PlayerMoveEvent) {
+    override fun bukkitOnMove(event: PlayerMoveEvent) {
         val player = event.player
         if (player.isFlying && !player.isInsideVehicle && !player.isGliding && !player.isRiptiding) {
             val from = event.from

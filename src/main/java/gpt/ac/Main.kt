@@ -1,17 +1,18 @@
 package gpt.ac
 
+
 import com.maxmind.geoip2.DatabaseReader
 import gpt.ac.util.CheckManager
-import gpt.ac.util.PacketEventsPacketListener
-import gpt.ac.vpnshit.ISPChecker
+import gpt.ac.util.PacketListener
 import gpt.ac.vpnshit.TorChecker
 import io.github.retrooper.packetevents.PacketEvents
+import io.github.retrooper.packetevents.utils.server.ServerVersion
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.player.*
+import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.java.JavaPlugin
-import sun.audio.AudioPlayer.player
 import java.io.File
 import java.io.FileOutputStream
 import java.net.HttpURLConnection
@@ -25,141 +26,133 @@ class Main : JavaPlugin(), Listener {
     @JvmStatic
     fun log(any:Any){
 println("[GPT-AntiCheat] $any")
-    }}
+    }
+    @JvmStatic
+    var plugin: Plugin? = null
+
+    }
+
+    override fun onLoad() {
+        PacketEvents.create(this)
+        val settings = PacketEvents.get().settings
+        settings
+            .fallbackServerVersion(ServerVersion.v_1_7_10)
+            .checkForUpdates(false)
+            .bStats(true)
+        PacketEvents.get().load()
+        PacketEvents.get().registerListener(PacketListener())
+
+    }
   override fun onEnable() {
+      Thread{
     logger.info("GPT AntiCheat was Loaded")
 CheckManager.init()
+plugin=this
       server.pluginManager.registerEvents(this, this);
 
-      PacketEvents.create(this).init()
+      PacketEvents.get().init()
       logger.info((if(PacketEvents.get().isInitialized) "✔️" else "❌") + " PacketEvents " + PacketEvents.get().version + " was " + (if(PacketEvents.get().isInitialized) "" else "not ") + "initialized successfully")
-      //PacketEvents.get().registerListener(PacketEventsPacketListener())
-if(!Files.exists(Paths.get("plugins/GPT-AntiCheat/"))){
+if(!Files.exists(Paths.get("plugins/GPT-AntiCheat/"))) {
     Files.createDirectory(Paths.get("plugins/GPT-AntiCheat"))
     logger.info("GPT Data Folder was Created")
-    val connection = URL("https://github.com/P3TERX/GeoLite.mmdb/releases/download/2023.02.22/GeoLite2-Country.mmdb").openConnection() as HttpURLConnection
-    connection.requestMethod = "GET"
-    connection.connect()
-
-    val contentLength = connection.contentLength
-    var downloadedBytes = 0
-
-    val inputStream = connection.inputStream
-    val outputStream = FileOutputStream("plugins/GPT-AntiCheat/country.mmdb")
-
-    val buffer = ByteArray(4096)
-    var bytesRead: Int
-    var lastProgress = 0
-
-    while (inputStream.read(buffer).also { bytesRead = it } != -1) {
-        outputStream.write(buffer, 0, bytesRead)
-        downloadedBytes += bytesRead
-
-        // Update progress bar
-        val progress = (downloadedBytes.toDouble() / contentLength * 100).toInt()
-        if (progress != lastProgress) {
-            print("\rDownloading... [$progress%]")
-            lastProgress = progress
-        }
-    }
-
-    outputStream.close()
-    inputStream.close()
-
-    println("\nFile downloaded ")
+    downloadGeoIPDB()
 }
-
+}.start()
   }
-@EventHandler
-fun onPlayerJoin(e:PlayerJoinEvent) {
-    if (e.player.address!!.address.hostAddress != "127.0.0.1" || e.player.address!!.address.hostAddress.startsWith("192.168")) {
-        val database = File("plugins/GPT-AntiCheat/country.mmdb")
-        val dbReader : DatabaseReader = DatabaseReader.Builder(database).build()
-        val response = dbReader.country(e.player.address!!.address)
-        if (!e.player.isOp) {
-            TorChecker.check(e.player)
-            ISPChecker.check(e.player)
+    @EventHandler
+    fun onPlayerJoin(e: PlayerJoinEvent) {
+        for(Check in CheckManager.checkClasses){
+            Check.onJoin(e)
         }
-        for (op in server.operators) {
-            if (op.isOnline) {
-
-                op.player!!.sendMessage("§2[❀GPT] §6${e.player.name}" + "§2 joined with the IP §a${e.player.address!!.address.hostAddress} (${response.traits.isp+"/"+response.country})")
+        val playerIp = e.player.address?.address?.hostAddress
+        if (playerIp == null || playerIp == "127.0.0.1" || playerIp.startsWith("192.168")) {
+            // Player joined via local network
+            for (op in server.operators) {
+                if (op.isOnline) {
+                    op.player?.sendMessage("§2[❀GPT] §6${e.player.name}§2 joined via the local network")
+                }
             }
+            return
         }
-    }
-    else{
-        for (op in server.operators) {
-            if (op.isOnline) {
-                op.player!!.sendMessage("§2[❀GPT] §6${e.player.name}" + "§2 joined via the local network")
 
+        // Player joined from external network
+        Thread {
+            val databaseFile = File("plugins/GPT-AntiCheat/country.mmdb")
+            val dbReader = DatabaseReader.Builder(databaseFile).build()
+            val response = dbReader.country(e.player.address!!.address)
+            if (!e.player.isOp) {
+                TorChecker.check(e.player)
             }
-        }
-
+            for (op in server.operators) {
+                if (op.isOnline) {
+                    op.player?.sendMessage("§2[❀GPT] §6${e.player.name}§2 joined with the IP §a${playerIp} (${response.traits.isp}/${response.country})")
+                }
+            }
+        }.start()
     }
-}
 
 
     @EventHandler
     fun onPlayerMove(e:PlayerMoveEvent){
-        logger.info("PlayerMoveEvent fired!")
 
 for(Check in CheckManager.checkClasses){
-  Check.BukkitonMove(e)
+  Check.bukkitOnMove(e)
 }
 
     }
     @EventHandler
     fun onPlayerInteract(e:PlayerInteractEntityEvent){
-        logger.info("PlayerInteractEntityEvent fired!")
 
         for(Check in CheckManager.checkClasses){
-            Check.BukkitonInteractEntity(e)
+            Check.bukkitOnInteractEntity(e)
         }
 
     }
-
     @EventHandler
-    fun onPlayerInteractAt(e:PlayerInteractAtEntityEvent){
-        logger.info("PlayerInteractAtEntityEvent fired!")
+    fun onPlayeLeave(e:PlayerQuitEvent){
 
         for(Check in CheckManager.checkClasses){
-            Check.BukkitonInteractAtEntity(e)
+            Check.onLeave(e)
+        }
+
+    }
+    @EventHandler
+    fun onPlayerInteractAt(e:PlayerInteractAtEntityEvent){
+
+        for(Check in CheckManager.checkClasses){
+            Check.bukkitOnInteractAtEntity(e)
         }
 
     }
     @EventHandler
     fun onBlockBreaking(e:BlockBreakEvent){
-        logger.info("BlockBreakEvent fired!")
 
         for(Check in CheckManager.checkClasses){
-            Check.BukkitonBreaking(e)
+            Check.bukkitOnBreaking(e)
         }
 
     }
     @EventHandler
     fun onPlayerAnimation(e:PlayerAnimationEvent){
-        logger.info("PlayerAnimationEvent fired!")
 
         for(Check in CheckManager.checkClasses){
-            Check.BukkitonAnimation(e)
+            Check.bukkitOnAnimation(e)
         }
 
     }
     @EventHandler
     fun onPlayerVelocity(e:PlayerVelocityEvent){
-        logger.info("PlayerVelocityEvent fired!")
 
         for(Check in CheckManager.checkClasses){
-            Check.BukkitonVelocity(e)
+            Check.bukkitOnVelocity(e)
         }
 
     }
     @EventHandler
     fun onInteract(e:PlayerInteractEvent){
-        logger.info("PlayerInteractEvent fired!")
 
         for(Check in CheckManager.checkClasses){
-            Check.BukkitonInteract(e)
+            Check.bukkitOnInteract(e)
         }
 
     }
@@ -168,5 +161,35 @@ for(Check in CheckManager.checkClasses){
         PacketEvents.get().unregisterAllListeners()
         PacketEvents.get().terminate()
     }
+fun downloadGeoIPDB(){
+    val url = URL("https://github.com/P3TERX/GeoLite.mmdb/releases/download/2023.02.22/GeoLite2-Country.mmdb")
+    val connection = url.openConnection() as HttpURLConnection
+
+    connection.apply {
+        requestMethod = "GET"
+        connect()
+    }
+
+    val contentLength = connection.contentLength
+    var downloadedBytes = 0
+
+    connection.inputStream.use { input ->
+        FileOutputStream("plugins/GPT-AntiCheat/country.mmdb").use { output ->
+            val buffer = ByteArray(4096)
+
+            while (true) {
+                val bytesRead = input.read(buffer)
+                if (bytesRead == -1) break
+                output.write(buffer, 0, bytesRead)
+
+                downloadedBytes += bytesRead
+                val progress = (downloadedBytes.toDouble() / contentLength * 100).toInt()
+                print("\rDownloading... [$progress%]")
+            }
+        }
+    }
+
+    println("\nFile downloaded")
+}
 
 }

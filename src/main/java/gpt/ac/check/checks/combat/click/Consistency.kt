@@ -1,0 +1,1 @@
+package gpt.ac.check.checks.combat.click
