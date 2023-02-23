@@ -8,10 +8,10 @@ import org.bukkit.event.player.PlayerMoveEvent
 import org.bukkit.potion.PotionEffectType
 import kotlin.math.abs
 
-class Speed : Check("Strafe", "Checks for invalid strafing behavior", Category.MOVE) {
+class Speed : Check("Strafe", "Checks for invalid strafing behavior", Category.MOVE,5) {
     private var lastLocation: Location? = null
 
-    override fun onMove(event: PlayerMoveEvent) {
+    override fun BukkitonMove(event: PlayerMoveEvent) {
         val player = event.player
         val location = player.location
 
@@ -23,9 +23,11 @@ class Speed : Check("Strafe", "Checks for invalid strafing behavior", Category.M
                 val ratio = deltaZ / deltaX
                 val speedEffect = player.getPotionEffect(PotionEffectType.SPEED)
                 val speedMultiplier = if (speedEffect != null) (0.2 * speedEffect.amplifier) + 1.0 else 1.0
-                val frictionMultiplier = if (player.isOnGround) player.location.block.state.blockData.material.slipperiness else 1.0
+                val frictionMultiplier = if (player.isCollidable) player.location.block.state.blockData.material.slipperiness else 1.0
                 if (ratio > 1.5 * speedMultiplier * frictionMultiplier.toFloat() || ratio < 0.5 * speedMultiplier * frictionMultiplier.toFloat()) {
                     flag(1L, player)
+                    event.isCancelled=true;
+
                 }
             }
         }

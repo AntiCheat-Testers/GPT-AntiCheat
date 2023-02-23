@@ -4,15 +4,13 @@ import gpt.ac.check.Check
 import org.bukkit.event.player.PlayerMoveEvent
 import org.bukkit.util.Vector
 
-class Flight : Check("Flight", "Checks for invalid motion while in air", Category.MOVE) {
-init {
-    threshold=10
-}
+class Flight: Check("Flight", "Checks for invalid motion while in air", Category.MOVE,5) {
+
     private val slimeVelocityThreshold = 1.5 // adjust this value as needed
     private var lastOnGround: Long = 0
     private var lastSlimeVelocity: Vector? = null
 
-    override fun onMove(event: PlayerMoveEvent) {
+    override fun BukkitonMove(event: PlayerMoveEvent) {
         val player = event.player
         if (player.isFlying && !player.isInsideVehicle && !player.isGliding && !player.isRiptiding) {
             val from = event.from
@@ -29,6 +27,7 @@ init {
                     if (lastSlimeVelocity != null && slimeVelocity.y < 0 && slimeVelocity.y < -slimeVelocityThreshold &&
                         slimeVelocity.subtract(lastSlimeVelocity!!).lengthSquared() > 0.01) {
                         flag(1, player)
+                        event.isCancelled=true;
                     }
                     lastSlimeVelocity = slimeVelocity
                 }

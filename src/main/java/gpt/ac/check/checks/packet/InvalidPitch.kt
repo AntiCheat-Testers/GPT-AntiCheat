@@ -9,15 +9,11 @@ import org.bukkit.event.player.PlayerMoveEvent
 private const val MIN_PITCH = -90.0
 private const val MAX_PITCH = 90.0
 
-class InvalidPitch : Check(
+class InvalidPitchCheck : Check(
     "Invalid Pitch",
     "Detects if a player has an invalid pitch",
-    Category.MOVE
-), Listener {
+    Category.MOVE,5) {
 
-    init {
-        threshold = 1
-    }
 
     @EventHandler
     fun onPlayerMove(event: PlayerMoveEvent) {
@@ -26,6 +22,7 @@ class InvalidPitch : Check(
 
         if (pitch > 90.0 || pitch < -90.0) {
             flag(1, player)
+            event.isCancelled=true
         }
     }
 }

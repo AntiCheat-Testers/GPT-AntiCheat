@@ -5,15 +5,11 @@ import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerMoveEvent
 import kotlin.math.abs
 
-class PositionCheck : Check("PositionCheck", "Predicts possible positions based on yaw", Check.Category.MOVE) {
+class PositionCheck : Check("PositionCheck", "Predicts possible positions based on yaw", Check.Category.MOVE,5) {
 
-    // Sets the threshold to 10 violations
-    init {
-        threshold = 10
-    }
 
     // Called when the player moves
-    override fun onMove(event: PlayerMoveEvent) {
+    override fun BukkitonMove(event: PlayerMoveEvent) {
         val player: Player = event.player
 
         // Get the current yaw of the player
@@ -29,6 +25,8 @@ class PositionCheck : Check("PositionCheck", "Predicts possible positions based 
                 // Check if the player's actual position is within a certain range of the predicted position
                 if (abs(predictedX - player.location.x) < 1 && abs(predictedZ - player.location.z) < 1) {
                     flag(1, player)
+                    event.isCancelled=true;
+
                 }
             }
         }

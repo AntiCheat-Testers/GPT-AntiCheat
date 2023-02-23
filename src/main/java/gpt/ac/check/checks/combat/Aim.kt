@@ -7,18 +7,15 @@ import org.bukkit.event.player.PlayerMoveEvent
 import java.lang.Math.abs
 
 // Define a class named Aim that extends the Check class
-class Aim() : Check("Aimbot", "Checks for botted aim", Category.COMBAT) {
+class Aim() : Check("Aimbot", "Checks for botted aim", Category.COMBAT,5) {
 
-    // Sets the threshold to 50 violations
-    init {
-        this.threshold = 50
-    }
+
 
     // Define a mutable map to store the pitch and yaw data for each player
     private val aimData: MutableMap<Player, Pair<Float, Float>> = mutableMapOf()
 
     // Called when the player moves
-    override fun onMove(event: PlayerMoveEvent) {
+    override fun BukkitonMove(event: PlayerMoveEvent) {
         val player = event.player
         val prevPitchYaw = aimData[player]
 
@@ -36,6 +33,7 @@ class Aim() : Check("Aimbot", "Checks for botted aim", Category.COMBAT) {
             // If the pitch or yaw difference is greater than 1.0, flag the player
             if (deltaPitch > 60.0 || deltaYaw > 30.0) {
                 flag(1, player)
+                event.isCancelled=true;
             }
         }
 
