@@ -217,6 +217,7 @@ class PacketListener : PacketListenerAbstract(PacketListenerPriority.HIGHEST) {
                 }
 
                 is WrappedPacketInUseItem -> {
+
                     for (check in CheckManager.checkClasses) {
                         check.onItemUse(player, wrappedPacket.hand, wrappedPacket.blockPosition)
                     }

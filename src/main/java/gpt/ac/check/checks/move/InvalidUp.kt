@@ -33,8 +33,10 @@ class InvalidUp :Check("Invalid Upward Motion","Detects invalid upward motion",C
 
             val predictedHeight = predictMaximumJumpHeight(perpetrator)
             playerMap[perpetrator] = Pair(perpetrator.location, predictedHeight)
-        if(predictedHeight<perpetrator.location.y-oldloc.y&&!perpetrator.location.add(0.0,-1.0,0.0).block.type.isSolid){
+
+        if(predictedHeight!= 0.3423839977416992&&predictedHeight!=0.304736315543518&&predictedHeight!=0.46153890890323357&&predictedHeight<perpetrator.location.y-oldloc.y&&!perpetrator.location.add(0.0,-1.0,0.0).block.type.isSolid){
             flag(1,perpetrator)
+
             PacketEvents.get().playerUtils.sendPacket(
                 perpetrator,
                 WrappedPacketOutEntity.WrappedPacketOutEntityLook(
@@ -43,6 +45,7 @@ class InvalidUp :Check("Invalid Upward Motion","Detects invalid upward motion",C
                     oldloc.pitch,
                     true
                 )
+
             )
             PacketEvents.get().playerUtils.sendPacket(
                 perpetrator,
