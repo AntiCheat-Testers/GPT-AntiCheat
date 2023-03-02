@@ -6,6 +6,7 @@ import org.reflections.Reflections
 import java.awt.SystemColor.info
 
 object CheckManager {
+    //I had to paste this from Bloatware as ChatGPT was too retarded
     val checkClasses = HashSet<Check>()
 
     fun init() {
