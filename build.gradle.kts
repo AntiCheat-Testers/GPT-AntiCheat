@@ -34,7 +34,7 @@ dependencies {
   implementation(kotlin("stdlib"))
   implementation("org.reflections:reflections:0.10.2")
   implementation("com.github.retrooper:packetevents:1.8.4")
-  implementation("com.maxmind.geoip2:geoip2:2.0.0")
+  implementation("com.maxmind.geoip2:geoip2:4.0.0")
   implementation("org.apache.commons:commons-math3:3.6.1")
   implementation("org.spigotmc:spigot-api:1.17-R0.1-SNAPSHOT")
 
