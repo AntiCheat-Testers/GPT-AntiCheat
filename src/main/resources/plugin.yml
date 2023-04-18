@@ -1,0 +1,4 @@
+main: gpt.ac.Main
+name: GPT-AntiCheat
+version: '0.1'
+api: '1'
