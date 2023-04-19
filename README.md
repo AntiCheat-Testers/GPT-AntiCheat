@@ -13,7 +13,7 @@ GPT-Anticheat is the best anticheat on the market because of its advanced machin
 - All pull requests should be thoroughly tested before submission.
 
 
-###Falsers
+### Falsers
 
 - Jumping on a slime block from >=4 blocks (InvalidUp)
 - Having momentum after head hitter on ice and blocker(Speed Limit)
@@ -23,7 +23,7 @@ GPT-Anticheat is the best anticheat on the market because of its advanced machin
 - -Friction if you continously change between two blocks with different slipperiness
 * If you know any just make a pull request and updater this pls
 
-###Bypassers
+### Bypassers
 -Glide and super fast horiz motion (Sometime work, but either way when disable you spam flag)
 -Speed hack (Just look at the speed limit check and see how big the threshold is LOL)
 -Aim Hack (Rise Sin wave rot and custom advanced rot bypasser)
