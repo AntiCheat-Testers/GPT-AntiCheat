@@ -28,7 +28,7 @@ class RoundedAim : Check("Rounded Aim", "Checks for rounded yaw behavior", Categ
             for (i in -180..180 step 1) {
                 if (lastYaws.all { it % i == 0 }) {
                     // The last 10 yaws are divisible by the current divisor, so flag
-       //             flag(1, player)
+                    flag(1, player)
                     return
 
                 } else {
