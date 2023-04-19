@@ -25,6 +25,9 @@ GPT-Anticheat is the best anticheat on the market because of its advanced machin
 
 ### Bypassers
 -Glide and super fast horiz motion (Sometime work, but either way when disable you spam flag)
+
 -Speed hack (Just look at the speed limit check and see how big the threshold is LOL)
+
 -Aim Hack (Rise Sin wave rot and custom advanced rot bypasser)
+
 -Clip (1 vl clip just you just have >0 deltaY and you clip to block with air above it)
