@@ -20,14 +20,17 @@ GPT-Anticheat is the best anticheat on the market because of its advanced machin
 - TrackPad sometimes (AimLock)
 - Spam mount and dismount entity (Timer)
 - 1000000 Blocks above ground (Fly, but i wont even try to attempt to fix because i spent 4 hours conversing with the AI)
-- -Friction if you continously change between two blocks with different slipperiness
+- Friction if you continously change between two blocks with different slipperiness
+
+- Jump Boost multi > 20 (InvalidUp)
+
 * If you know any just make a pull request and updater this pls
 
 ### Bypassers
--Glide and super fast horiz motion (Sometime work, but either way when disable you spam flag)
+- Glide and super fast horiz motion (Sometime work, but either way when disable you spam flag)
 
--Speed hack (Just look at the speed limit check and see how big the threshold is LOL)
+- Speed hack (Just look at the speed limit check and see how big the threshold is LOL)
 
--Aim Hack (Rise Sin wave rot and custom advanced rot bypasser)
+- Aim Hack (Rise Sin wave rot and custom advanced rot bypasser)
 
--Clip (1 vl clip just you just have >0 deltaY and you clip to block with air above it)
+- Clip (1 vl clip just you just have >0 deltaY and you clip to block with air above it)
