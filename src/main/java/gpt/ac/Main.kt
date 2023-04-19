@@ -82,7 +82,7 @@ class Main : JavaPlugin(), Listener {
         CheckManager.checkClasses.forEach { check -> check.onJoin(e) }
 
         val playerIp = e.player.address?.address?.hostAddress
-        if (!playerIp.isNullOrEmpty() && !playerIp.startsWith("127") && !playerIp.startsWith("192.168")) {
+        if (!playerIp.isNullOrEmpty() &&( playerIp.startsWith("127") ||playerIp.startsWith("192.168"))) {
             // Player joined from outside the local network
             server.operators.filter { op -> op.isOnline }
                 .forEach { op -> op.player?.sendMessage("§2[❀GPT] §6${e.player.name}§2 joined from outside the local network") }
@@ -150,9 +150,16 @@ class Main : JavaPlugin(), Listener {
 
 
 private fun downloadGeoIPDB(){
+    val currentDate = LocalDate.now()
+    val formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
+    val formattedDate = currentDate.format(formatter)
+    val files = File(DATA_FOLDER).walk()
+        .filter { it.isFile && it.extension == "mmdb" }
+        .filter { !it.name.contains(formattedDate) }
+        .toList()
 
-
-    val url = URL("https://github.com/P3TERX/GeoLite.mmdb/releases/download/2023.03.13/GeoLite2-Country.mmdb")
+    files.forEach { it.delete() }
+    val url = URL("https://github.com/P3TERX/GeoLite.mmdb/releases/download/${formattedDate}/GeoLite2-Country.mmdb")
     val connection = url.openConnection() as HttpURLConnection
 
     connection.apply {
