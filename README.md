@@ -23,6 +23,7 @@ GPT-Anticheat is the best anticheat on the market because of its advanced machin
 - Friction if you continously change between two blocks with different slipperiness
 
 - Jump Boost multi > 20 (InvalidUp)
+- Weird Rotation Changes Flagger AimLock sometimes,Like spinning around a non entity &/or a  block
 
 * If you know any just make a pull request and updater this pls
 
@@ -34,3 +35,5 @@ GPT-Anticheat is the best anticheat on the market because of its advanced machin
 - Aim Hack (Rise Sin wave rot and custom advanced rot bypasser)
 
 - Clip (1 vl clip just you just have >0 deltaY and you clip to block with air above it)
+
+ 
