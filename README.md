@@ -24,6 +24,7 @@ GPT-Anticheat is the best anticheat on the market because of its advanced machin
 
 - Jump Boost multi > 20 (InvalidUp)
 - Weird Rotation Changes Flagger AimLock sometimes,Like spinning around a non entity &/or a  block
+- Sending Ability Flying Packet Randomly Bypasser,Not always but soon I will maker check that will instaban the lixo
 
 * If you know any just make a pull request and updater this pls
 
