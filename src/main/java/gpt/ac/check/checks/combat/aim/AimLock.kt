@@ -9,6 +9,8 @@ import org.bukkit.entity.Player
 import org.bukkit.util.Vector
 import kotlin.math.*
 
+
+//Even Idfk how this doesnt false as much as i thought it should as it does it on every poslook so one would thinker it would flag by running in circle but it doesnt !?!?!?
 class AimLock: Check("AimLock","Checks for suspicous aim",Category.COMBAT,190) {
     private val mappedhitpositions: MutableMap<Player, MutableList<Pair<Double, Double>>> = mutableMapOf()
 
