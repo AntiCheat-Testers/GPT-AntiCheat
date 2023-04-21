@@ -16,6 +16,7 @@ import org.bukkit.entity.Entity
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
 import org.bukkit.potion.PotionEffectType
+import org.bukkit.util.Vector
 import sun.audio.AudioPlayer.player
 import java.lang.Math.abs
 
@@ -124,4 +125,5 @@ if(player.velocity.y>0){
         val ridables = entities.filter { it.type in arrayOf(EntityType.HORSE, EntityType.PIG,EntityType.BOAT,EntityType.MINECART) && it.location.distance(location) <= radius }
         return ridables.isNotEmpty()
     }
+    
 }

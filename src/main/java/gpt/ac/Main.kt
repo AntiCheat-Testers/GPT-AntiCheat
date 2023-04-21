@@ -85,26 +85,28 @@ class Main : JavaPlugin(), Listener {
         if (!playerIp.isNullOrEmpty() &&( playerIp.startsWith("127") ||playerIp.startsWith("192.168"))) {
             // Player joined from outside the local network
             server.operators.filter { op -> op.isOnline }
-                .forEach { op -> op.player?.sendMessage("§2[❀GPT] §6${e.player.name}§2 joined from outside the local network") }
+                .forEach { op -> op.player?.sendMessage("§2[❀GPT] §6${e.player.name}§2 joined from the local network") }
+        }else {
+
+            // Player joined from external network
+            Thread {
+                val databaseFile = File("${DATA_FOLDER}country-db-${formattedDate}.mmdb")
+
+                runCatching {
+                    DatabaseReader.Builder(databaseFile).build().country(e.player.address!!.address)
+                }.onSuccess { response ->
+                    if (!e.player.isOp) {
+                        IPChecker.check(e.player)
+                    }
+                    server.operators.filter { it.isOnline }.forEach { op ->
+                        op.player?.sendMessage("§2[❀GPT] §6${e.player.name}§2 joined with the IP §a${playerIp} (${response.traits.isp}/${response.country})")
+                    }
+                }.onFailure { exception ->
+                    logger.warning("Failed to get country information for player ${e.player.name}: ${exception.message}")
+                }
+            }.start()
+
         }
-
-        // Player joined from external network
-        Thread {
-            val databaseFile = File("${DATA_FOLDER}country-db-${formattedDate}.mmdb")
-
-            runCatching {
-                DatabaseReader.Builder(databaseFile).build().country(e.player.address!!.address)
-            }.onSuccess { response ->
-                if (!e.player.isOp) {
-                    IPChecker.check(e.player)
-                }
-                server.operators.filter { it.isOnline }.forEach { op ->
-                    op.player?.sendMessage("§2[❀GPT] §6${e.player.name}§2 joined with the IP §a${playerIp} (${response.traits.isp}/${response.country})")
-                }
-            }.onFailure { exception ->
-                logger.warning("Failed to get country information for player ${e.player.name}: ${exception.message}")
-            }
-        }.start()
     }
 
 
