@@ -6,7 +6,7 @@ import io.github.retrooper.packetevents.packetwrappers.WrappedPacket
 import io.github.retrooper.packetevents.packetwrappers.play.`in`.helditemslot.WrappedPacketInHeldItemSlot
 import org.bukkit.entity.Player
 
-class SameSlot: Check("Same Slot","Detects if the Player sends 2 of the same slot",Category.PACKET,1) {
+class SameSlo: Check("Same Slot","Detects if the Player sends 2 of the same slot",Category.PACKET,1) {
 private var lastSelectedSlot=0;
 
     override fun onPacketSend(perpetrator : Player, wrappedpacket : WrappedPacket, event : PacketPlaySendEvent) {

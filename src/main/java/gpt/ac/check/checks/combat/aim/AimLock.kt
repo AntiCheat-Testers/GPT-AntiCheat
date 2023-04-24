@@ -60,7 +60,7 @@ class AimLock: Check("AimLock","Checks for suspicous aim",Category.COMBAT,190) {
 
 
                 // Apply heuristics and set violation level
-                if ( distanceStdDev < 0.2 * meanDistance&&abs(distanceStdDev- 0.2 * meanDistance)>=0.00971706585713259&&distanceStdDev<=0.00937387558262262&&distanceStdDev<0.0060224826354349&&distanceStdDev>0.004088022198609647&&angleStdDev<8299.91938491934) {
+                if (( distanceStdDev < 0.2 * meanDistance&&abs(distanceStdDev- 0.2 * meanDistance)>=0.00971706585713259&&distanceStdDev<=0.00937387558262262&&distanceStdDev<0.0060224826354349&&distanceStdDev>0.004088022198609647&&angleStdDev<8299.91938491934)||angleStdDev<=0.0) {
 
                     flag(1,perpetrator,"Impossible Standard Deviation Distance\n MAX STD DISTANCE ${0.2 * meanDistance} \n ACTUAL STD DISTANCE $distanceStdDev \n AVG ANGLE STD DISTANCE $angleStdDev")
                 }

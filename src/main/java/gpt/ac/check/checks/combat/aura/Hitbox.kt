@@ -14,7 +14,17 @@ import java.util.*
 class Hitbox : Check("Hitbox", "Player Hit outside of an entity hitbox", Category.COMBAT, 5) {
 
     // This function is called when a player uses an entity
- 
+    override fun onFlying(
+        perpetrator : Player,
+        yaw : Float,
+        pitch : Float,
+        posvec : Vector3d,
+        onGround : Boolean,
+        isMoving : Boolean,
+        isRotating : Boolean
+    ) {
+
+    }
     override fun onUseEntity(
         perpetrator: Player,
         action: WrappedPacketInUseEntity.EntityUseAction,

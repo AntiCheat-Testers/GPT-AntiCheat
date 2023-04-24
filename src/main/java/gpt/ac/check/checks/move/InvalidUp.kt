@@ -15,7 +15,7 @@ import org.bukkit.util.Vector
 import sun.audio.AudioPlayer.player
 
 class InvalidUp :Check("Invalid Upward Motion","Detects invalid upward motion",Category.MOVE,10) {
-//I should deleter this check but it stop all step hacker so \_(-.-)_/
+
     private val playerMap: MutableMap<Player, Pair<Location, Double>> = mutableMapOf()
 
     override fun onFlying(
