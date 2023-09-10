@@ -18,10 +18,10 @@ class Friction : Check("Friction","Checks for invalid block friction",Category.M
         isMoving : Boolean,
         isRotating : Boolean
     ) {
-        if(!isPlayerFollowingFriction(perpetrator,perpetrator.location.subtract(0.3,0.05,0.3).block)&&isMoving){
+        if(!isPlayerFollowingFriction(perpetrator,perpetrator.location.subtract(0.3,0.05,0.3).block)&&isMoving&&isRotating){
 
             if(perpetrator.location.subtract(0.3,0.05,0.3).block.type.isSolid&&perpetrator.velocity.y== -0.0784000015258789&&onGround) {
-                flag(1, perpetrator)
+          //      flag(1, perpetrator)
             }
         }
     }

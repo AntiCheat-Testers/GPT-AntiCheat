@@ -36,11 +36,11 @@ class FallTimePrediction: Check("Fall Time Prediction","Checks if the players fa
             // Calculate how many ticks it actually took to fall
             val actualFallTime = calculateActualFallTime(fallDistance, velocity)
 
-            if (!perpetrator.isFlying&&predictedFallTime ==6 && actualFallTime> 11||predictedFallTime==3&&actualFallTime==0&&!perpetrator.location.subtract(0.3,0.2,0.3).block.type.isSolid&&!perpetrator.location.subtract(0.3,0.5,0.3).block.isLiquid&&perpetrator.velocity.y>=0) {
+            if (!perpetrator.allowFlight&&(!perpetrator.isFlying&&predictedFallTime ==6 && actualFallTime> 11||predictedFallTime==3&&actualFallTime==0&&!perpetrator.location.subtract(0.3,0.2,0.3).block.type.isSolid&&!perpetrator.location.subtract(0.3,0.5,0.3).block.isLiquid&&perpetrator.velocity.y>=0)) {
                 flag(
                     1,
                     perpetrator,
-                    "Flight violation detected. Predicted fall time: $predictedFallTime. Actual fall time: $actualFallTime."
+                    "Flight violation detected. Predicted fall ticks: $predictedFallTime. Actual fall ticks: $actualFallTime."
                 )
 
                 PacketEvents.get().playerUtils.sendPacket(

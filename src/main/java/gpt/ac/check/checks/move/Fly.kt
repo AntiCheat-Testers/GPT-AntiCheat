@@ -12,7 +12,6 @@ import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
 import org.bukkit.potion.PotionEffectType
 import org.bukkit.util.Vector
-import sun.audio.AudioPlayer.player
 import java.lang.Math.*
 import kotlin.math.roundToInt
 

@@ -36,7 +36,7 @@ class Hitbox : Check("Hitbox", "Player Hit outside of an entity hitbox", Categor
             // Check if there is an entity present
             if (entity != null ) {
                 // Check if the player has hit outside of the entity hitbox
-                if (raycast(perpetrator, 8.0)!!.location.distance(entity.location) > 3.401&&(entity as Player).noDamageTicks>=0.0 || raycast(perpetrator, .3)!!.location.block.type.isSolid) {
+                if (raycast(perpetrator, 3.0)!!.location.distance(entity.location) > 3.301&&(entity as Player).noDamageTicks>=0.0 || raycast(perpetrator, .3)!!.location.block.type.isSolid) {
                     // Flag the perpetrator if the hit is outside of the entity hitbox
                     flag(1, perpetrator,"DIST=${raycast(perpetrator, 3.0)!!.location.distance(entity.location)} \n THROUGHSOLID=${ raycast(perpetrator, 4.0)!!.location.block.type.isSolid}")
                 }

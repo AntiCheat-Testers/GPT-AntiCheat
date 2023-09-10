@@ -12,7 +12,6 @@ import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.potion.PotionEffectType
 import org.bukkit.util.Vector
-import sun.audio.AudioPlayer.player
 
 class InvalidUp :Check("Invalid Upward Motion","Detects invalid upward motion",Category.MOVE,10) {
 
@@ -49,10 +48,15 @@ class InvalidUp :Check("Invalid Upward Motion","Detects invalid upward motion",C
 
             )
             if(oldloc.add(0.0,-predictedHeight,0.0).y >= oldloc.y&&oldloc.add(0.0,-predictedHeight,0.0).block.type==Material.AIR) {
+
+
                 PacketEvents.get().playerUtils.sendPacket(
                     perpetrator,
                     WrappedPacketOutEntityTeleport(perpetrator.entityId, oldloc.add(0.0, -predictedHeight, 0.0), false)
                 )
+                if(perpetrator.location.y!= oldloc.add(0.0, -predictedHeight, 0.0).y){
+                    flag(1,perpetrator,"Invalid Position")
+                }
             }
         }else{
             playerMap[perpetrator] = Pair(perpetrator.location, predictedHeight)
@@ -89,7 +93,6 @@ class InvalidUp :Check("Invalid Upward Motion","Detects invalid upward motion",C
             if (previousBlock.type == Material.SLIME_BLOCK) {
                 // Player just bounced on slime block
                 slimeHeight = 0.4 + Math.abs(momentumY) * 1.6
-println(slimeHeight)
     return slimeHeight*(momentumY+player.eyeHeight)
             }
         }
