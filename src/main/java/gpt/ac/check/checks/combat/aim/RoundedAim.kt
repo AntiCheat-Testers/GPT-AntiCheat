@@ -7,7 +7,7 @@ import org.bukkit.entity.Player
 import org.bukkit.event.player.PlayerMoveEvent
 import kotlin.math.abs
 
-class RoundedAim : Check("Rounded Aim", "Checks for rounded yaw behavior", Category.COMBAT,5) {
+class RoundedAim : Check("Rounded gpt.ac.check.checks.combat.aim.Aim", "Checks for rounded yaw behavior", Category.COMBAT,5) {
     private val lastYaws = IntArray(10)
     private var lastIndex = 0
 
@@ -20,7 +20,7 @@ class RoundedAim : Check("Rounded Aim", "Checks for rounded yaw behavior", Categ
         isMoving : Boolean,
         isRotating : Boolean
     ) {
-        if(isRotating) {
+        if(isRotating&& yaw.toInt() !=lastYaws[lastYaws.size-1]) {
             val player : Player = perpetrator
             val roundedYaw : Int = abs(player.location.yaw).toInt() % 360
             lastYaws[lastIndex] = roundedYaw
@@ -28,7 +28,7 @@ class RoundedAim : Check("Rounded Aim", "Checks for rounded yaw behavior", Categ
             for (i in -180..180 step 1) {
                 if (lastYaws.all { it % i == 0 }) {
                     // The last 10 yaws are divisible by the current divisor, so flag
-       //             flag(1, player)
+          ///         flag(1, player)
                     return
 
                 } else {

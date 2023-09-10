@@ -31,7 +31,7 @@ class FallTimePredictor(private val player: Player) {
 
     private fun getGroundLevel(): Double {
         var groundLevel = player.location.blockY.toDouble()
-        val maxSearchDistance = 5
+        val maxSearchDistance = 255
 
         for (i in 1..maxSearchDistance) {
             val block = player.location.world!!.getBlockAt(

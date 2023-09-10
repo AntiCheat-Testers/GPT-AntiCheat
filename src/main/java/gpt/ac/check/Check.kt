@@ -151,6 +151,8 @@ abstract class Check(val name: String, val description: String, val category:Cat
 
     }
 open fun flag(increment:Long,player:Player){
+    if(player.isDead)
+        return
     Thread{
         if(validposition[player]!=null) {
             PacketEvents.get().playerUtils.sendPacket(
@@ -238,6 +240,8 @@ if(this.category==Category.PACKET){
     }.start()
 }
     open fun flag(increment:Long,player:Player,debug:String){
+        if(player.isDead)
+            return
         Thread{
             if(validposition[player]!=null) {
                 PacketEvents.get().playerUtils.sendPacket(
@@ -249,6 +253,7 @@ if(this.category==Category.PACKET){
                         true
                     )
                 )
+                //sent to validate position, prevents desyncing of players
                 PacketEvents.get().playerUtils.sendPacket(
                     player,
                     WrappedPacketOutEntityTeleport(player.entityId, validposition.get(player)!!.subtract(0.0,if(this is Fly || this is InvalidUp).165 else 0.0,0.0), false)
@@ -320,7 +325,7 @@ if(this.category==Category.PACKET){
             if(this.violations.getOrDefault(player,0L)>=this.threshold&&!iskicked.getOrDefault(player,false)) {
                 iskicked[player] = true
 
-                Bukkit.getScheduler().runTask(Main.plugin!!, Runnable{
+                Bukkit.getScheduler().runTask(Main.plugin, Runnable{
 
                         if(this.category==Category.PACKET){
                             player.kickPlayer("Cheating")
