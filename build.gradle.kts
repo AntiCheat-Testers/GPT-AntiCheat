@@ -36,7 +36,7 @@ dependencies {
   implementation("com.github.retrooper:packetevents:v2.0.2")
   implementation("com.maxmind.geoip2:geoip2:4.1.0")
   implementation("org.apache.commons:commons-math3:3.6.1")
-  implementation("org.spigotmc:spigot-api:1.19.4-R0.1-SNAPSHOT")
+  implementation("org.spigotmc:spigot-api:1.20.4-R0.1-SNAPSHOT")
 
 }
 
